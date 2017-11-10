@@ -122,14 +122,14 @@ static void HAL_UART_ConfigItCallBack(uint8_t uUartNode)
     {
     case HAL_UART_NODE0: 
         {
-            g_IRQInterface.pf_USART1_IRQHandler = HAL_UART0_RX_IRQHandler; 
-            g_IRQInterface.pf_DMA1_Channel2_3_IRQHandler = HAL_UART0_DMATC_IRQHandler; 
+            HAL_IRQ_SetTrgCallback(HAL_UART0_RX_IRQHandler, IRQ_TRG_USART1);
+            HAL_IRQ_SetTrgCallback(HAL_UART0_DMATC_IRQHandler, IRQ_TRG_DMA1_Channel2_3);
             break;
         }
     case HAL_UART_NODE1: 
         {
-            g_IRQInterface.pf_USART2_IRQHandler = HAL_UART1_RX_IRQHandler; 
-            g_IRQInterface.pf_DMA1_Channel4_5_IRQHandler = HAL_UART1_DMATC_IRQHandler; 
+            HAL_IRQ_SetTrgCallback(HAL_UART1_RX_IRQHandler, IRQ_TRG_USART2);
+            HAL_IRQ_SetTrgCallback(HAL_UART1_DMATC_IRQHandler, IRQ_TRG_DMA1_Channel4_5);
             break;
         }
     

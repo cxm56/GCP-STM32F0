@@ -3,36 +3,37 @@
 
 #include "..\\..\\DataType\\DataType.h"
 
-#define CAN0_NODE_ID                            (0)
-#define CAN1_NODE_ID                            (1)
+#define CAN0_NODE_ID                (0)
+#define CAN1_NODE_ID                (1)
 
 //波特率表索引宏定义
-#define CANBAUD_1M              (0)
-#define CANBAUD_500K            (1)
-#define CANBAUD_250K            (2)
-#define CANBAUD_125K            (3)
-#define CANBAUD_100K            (4)
-#define CANBAUD_50K             (5)
-#define CANBAUD_25K             (6)
-#define CANBAUD_20K             (7)
-#define CANBAUD_10K                (8)
-#define CANBAUD_5K                (9)
-#define CANBAUD_2K5                (10)
+#define CANBAUD_1M                  (0)
+#define CANBAUD_500K                (1)
+#define CANBAUD_250K                (2)
+#define CANBAUD_125K                (3)
+#define CANBAUD_100K                (4)
+#define CANBAUD_50K                 (5)
+#define CANBAUD_25K                 (6)
+#define CANBAUD_20K                 (7)
+#define CANBAUD_10K                 (8)
+#define CANBAUD_5K                  (9)
+#define CANBAUD_2K5                 (10)
+                                    
+#define ENABLE_CAN_NODE_NUM         (2)//使能CAN节点数目
+#define _CAN_TX_BUFFER_FUN_         (1)//是否加入发送缓冲区
+                                    
+#define CAN_SEND_NO_FORCE           (0)
+#define CAN_SEND_FORCE              (1)
+#define CAN_DATA_MAX_LEN            (8)
+                                    
+#define CAN_ERR_SUCCESS             (0)//成功
+#define CAN_ERR_CONNECT             (1)//表示通信连接出错(接收和发送抽象层硬件出错)
+#define CAN_ERR_SEND                (2)//发送数据失败
+#define CAN_ERR_EMPTY               (3)//未收到任何数据
+                                    
+                                    
+#define CAN_CONTINUE_SEND_GAP       (10000) //2777个循环约为1us
 
-#define ENABLE_CAN_NODE_NUM     (2)//使能CAN节点数目
-#define _CAN_TX_BUFFER_FUN_        (1)//是否加入发送缓冲区
-
-#define CAN_SEND_NO_FORCE       (0)
-#define CAN_SEND_FORCE            (1)
-#define CAN_DATA_MAX_LEN        (8)
-
-#define CAN_ERR_SUCCESS                    (0)//成功
-#define CAN_ERR_CONNECT                    (1)//表示通信连接出错(接收和发送抽象层硬件出错)
-#define CAN_ERR_SEND                    (2)//发送数据失败
-#define CAN_ERR_EMPTY                    (3)//未收到任何数据
-
-
-#define CAN_CONTINUE_SEND_GAP     (10000) //2777个循环约为1us
 
 //定义CAN报文结构体
 typedef struct {
@@ -138,8 +139,6 @@ typedef struct can_interface
     
     uBit32 (*pf_CAN_GetFrame)(uBit8 nCanNode, CanFrame *pRcvFrame);
 
-
-    //检查最后一帧数据是否发送完成，连续发送时调用
-    //BooLean (*pf_CAN_IsLastFrameSent)(uBit8 nCanNode);
 }CAN_INTERFACE;
+
 #endif

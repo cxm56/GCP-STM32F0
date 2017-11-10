@@ -17,8 +17,42 @@
 #include "HAL_IRQHandler.h"
 
 
+typedef struct 
+{
+    void (*pf_SysTick_Update                )(void);
+    void (*pf_SysTick_Handler               )(void);
+    void (*pf_PVD_IRQHandler                )(void);
+    void (*pf_RTC_IRQHandler                )(void);
+    void (*pf_FLASH_IRQHandler              )(void);
+    void (*pf_RCC_IRQHandler                )(void);
+    void (*pf_EXTI0_1_IRQHandler            )(void);
+    void (*pf_EXTI2_3_IRQHandler            )(void);
+    void (*pf_EXTI4_15_IRQHandler           )(void);
+    void (*pf_TS_IRQHandler                 )(void);
+    void (*pf_DMA1_Channel1_IRQHandler      )(void);
+    void (*pf_DMA1_Channel2_3_IRQHandler    )(void);
+    void (*pf_DMA1_Channel4_5_IRQHandler    )(void);
+    void (*pf_ADC1_COMP_IRQHandler          )(void);
+    void (*pf_TIM1_BRK_UP_TRG_COM_IRQHandler)(void);
+    void (*pf_TIM1_CC_IRQHandler            )(void);
+    void (*pf_TIM2_IRQHandler               )(void);
+    void (*pf_TIM3_IRQHandler               )(void);
+    void (*pf_TIM6_DAC_IRQHandler           )(void);
+    void (*pf_TIM14_IRQHandler              )(void);
+    void (*pf_TIM15_IRQHandler              )(void);
+    void (*pf_TIM16_IRQHandler              )(void);
+    void (*pf_TIM17_IRQHandler              )(void);
+    void (*pf_I2C1_IRQHandler               )(void);
+    void (*pf_I2C2_IRQHandler               )(void);
+    void (*pf_SPI1_IRQHandler               )(void);
+    void (*pf_SPI2_IRQHandler               )(void);
+    void (*pf_USART1_IRQHandler             )(void);
+    void (*pf_USART2_IRQHandler             )(void);
+    
+}STM32F0XX_IRQ_INTERFACE;
 
-STM32F0XX_IRQ_INTERFACE  g_IRQInterface;  //全局中断回调指针接口
+
+static STM32F0XX_IRQ_INTERFACE  g_IRQInterface;  //全局中断回调指针接口
 
 
 /**
@@ -68,6 +102,80 @@ void HAL_IRQ_Init(void)
     
 }
 
+
+/**
+  * @brief  设置中断触发回调
+  * @param  ptr 回调指针
+  * @param  ulTrgSource 触发源
+  * @retval None
+  */
+void HAL_IRQ_SetTrgCallback(void (*ptr)(void), uint32_t ulTrgSource)
+{
+    if (ptr == NULL) 
+    {
+        return;
+    }
+    
+    switch (ulTrgSource)
+    {
+
+    //系统滴答
+    case IRQ_TRG_SYSTICK_UPDATE:        g_IRQInterface.pf_SysTick_Update                  = ptr; break;
+    case IRQ_TRG_SYSTICK_OS:            g_IRQInterface.pf_SysTick_Handler                 = ptr; break;
+    
+    case IRQ_TRG_PVD:                   g_IRQInterface.pf_PVD_IRQHandler                  = ptr; break;
+    case IRQ_TRG_RTC:                   g_IRQInterface.pf_RTC_IRQHandler                  = ptr; break;
+    case IRQ_TRG_FLASH:                 g_IRQInterface.pf_FLASH_IRQHandler                = ptr; break;
+    case IRQ_TRG_RCC:                   g_IRQInterface.pf_RCC_IRQHandler                  = ptr; break;
+    case IRQ_TRG_EXTI0_1:               g_IRQInterface.pf_EXTI0_1_IRQHandler              = ptr; break;
+    case IRQ_TRG_EXTI2_3:               g_IRQInterface.pf_EXTI2_3_IRQHandler              = ptr; break;
+    case IRQ_TRG_EXTI4_15:              g_IRQInterface.pf_EXTI4_15_IRQHandler             = ptr; break;
+    case IRQ_TRG_TS:                    g_IRQInterface.pf_TS_IRQHandler                   = ptr; break;
+    case IRQ_TRG_DMA1_Channel1:         g_IRQInterface.pf_DMA1_Channel1_IRQHandler        = ptr; break;
+    case IRQ_TRG_DMA1_Channel2_3:       g_IRQInterface.pf_DMA1_Channel2_3_IRQHandler      = ptr; break;
+    case IRQ_TRG_DMA1_Channel4_5:       g_IRQInterface.pf_DMA1_Channel4_5_IRQHandler      = ptr; break;
+    case IRQ_TRG_ADC1_COMP:             g_IRQInterface.pf_ADC1_COMP_IRQHandler            = ptr; break;
+    case IRQ_TRG_TIM1_BRK_UP_TRG_COM:   g_IRQInterface.pf_TIM1_BRK_UP_TRG_COM_IRQHandler  = ptr; break;
+    case IRQ_TRG_TIM1_CC:               g_IRQInterface.pf_TIM1_CC_IRQHandler              = ptr; break;
+    case IRQ_TRG_TIM2:                  g_IRQInterface.pf_TIM2_IRQHandler                 = ptr; break;
+    case IRQ_TRG_TIM3:                  g_IRQInterface.pf_TIM3_IRQHandler                 = ptr; break;
+    case IRQ_TRG_TIM6_DAC:              g_IRQInterface.pf_TIM6_DAC_IRQHandler             = ptr; break;
+    case IRQ_TRG_TIM14:                 g_IRQInterface.pf_TIM14_IRQHandler                = ptr; break;
+    case IRQ_TRG_TIM15:                 g_IRQInterface.pf_TIM15_IRQHandler                = ptr; break;
+    case IRQ_TRG_TIM16:                 g_IRQInterface.pf_TIM16_IRQHandler                = ptr; break;
+    case IRQ_TRG_TIM17:                 g_IRQInterface.pf_TIM17_IRQHandler                = ptr; break;
+    case IRQ_TRG_I2C1:                  g_IRQInterface.pf_I2C1_IRQHandler                 = ptr; break;
+    case IRQ_TRG_I2C2:                  g_IRQInterface.pf_I2C2_IRQHandler                 = ptr; break;
+    case IRQ_TRG_SPI1:                  g_IRQInterface.pf_SPI1_IRQHandler                 = ptr; break;
+    case IRQ_TRG_SPI2:                  g_IRQInterface.pf_SPI2_IRQHandler                 = ptr; break;
+    case IRQ_TRG_USART1:                g_IRQInterface.pf_USART1_IRQHandler               = ptr; break;
+    case IRQ_TRG_USART2:                g_IRQInterface.pf_USART2_IRQHandler               = ptr; break;
+    
+    default: break;
+    }
+    
+}
+
+
+/**
+  * @brief  释放中断触发回调
+  * @param  ulTrgSource 触发源
+  * @retval None
+  */
+void HAL_IRQ_ReleaseTrgCallback(uint32_t ulTrgSource)
+{
+    switch (ulTrgSource)
+    {
+
+    //系统滴答
+    case IRQ_TRG_SYSTICK_UPDATE: g_IRQInterface.pf_SysTick_Update =  HAL_IRQ_NullEntry; break;
+    case IRQ_TRG_SYSTICK_OS:  g_IRQInterface.pf_SysTick_Handler =  HAL_IRQ_NullEntry; break;
+    
+
+    default: break;
+    }
+    
+}
 
 
 /**

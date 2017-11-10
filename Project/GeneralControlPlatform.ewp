@@ -2227,6 +2227,21 @@
   <group>
     <name>SysPeripheral</name>
     <group>
+      <name>CAN</name>
+    </group>
+    <group>
+      <name>DAC</name>
+    </group>
+    <group>
+      <name>ENET</name>
+    </group>
+    <group>
+      <name>EXTI</name>
+    </group>
+    <group>
+      <name>FLASH</name>
+    </group>
+    <group>
       <name>GPIO</name>
       <file>
         <name>$PROJ_DIR$\..\SysPeripheral\GPIO\GPIO_Man.c</name>
@@ -2330,6 +2345,9 @@
       <file>
         <name>$PROJ_DIR$\..\SysPeripheral\KEY\KEY.h</name>
       </file>
+    </group>
+    <group>
+      <name>QEI</name>
     </group>
     <group>
       <name>SysCtrl</name>

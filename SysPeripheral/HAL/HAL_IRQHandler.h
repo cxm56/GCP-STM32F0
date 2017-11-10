@@ -1,42 +1,44 @@
 #ifndef  __HAL_IRQ_HANDLER_H
 #define  __HAL_IRQ_HANDLER_H
 
+#include "chip.h"
 
-typedef struct 
+typedef enum
 {
-    void (*pf_SysTick_Update                )(void);
-    void (*pf_SysTick_Handler               )(void);
-    void (*pf_PVD_IRQHandler                )(void);
-    void (*pf_RTC_IRQHandler                )(void);
-    void (*pf_FLASH_IRQHandler              )(void);
-    void (*pf_RCC_IRQHandler                )(void);
-    void (*pf_EXTI0_1_IRQHandler            )(void);
-    void (*pf_EXTI2_3_IRQHandler            )(void);
-    void (*pf_EXTI4_15_IRQHandler           )(void);
-    void (*pf_TS_IRQHandler                 )(void);
-    void (*pf_DMA1_Channel1_IRQHandler      )(void);
-    void (*pf_DMA1_Channel2_3_IRQHandler    )(void);
-    void (*pf_DMA1_Channel4_5_IRQHandler    )(void);
-    void (*pf_ADC1_COMP_IRQHandler          )(void);
-    void (*pf_TIM1_BRK_UP_TRG_COM_IRQHandler)(void);
-    void (*pf_TIM1_CC_IRQHandler            )(void);
-    void (*pf_TIM2_IRQHandler               )(void);
-    void (*pf_TIM3_IRQHandler               )(void);
-    void (*pf_TIM6_DAC_IRQHandler           )(void);
-    void (*pf_TIM14_IRQHandler              )(void);
-    void (*pf_TIM15_IRQHandler              )(void);
-    void (*pf_TIM16_IRQHandler              )(void);
-    void (*pf_TIM17_IRQHandler              )(void);
-    void (*pf_I2C1_IRQHandler               )(void);
-    void (*pf_I2C2_IRQHandler               )(void);
-    void (*pf_SPI1_IRQHandler               )(void);
-    void (*pf_SPI2_IRQHandler               )(void);
-    void (*pf_USART1_IRQHandler             )(void);
-    void (*pf_USART2_IRQHandler             )(void);
+    //系统滴答
+    IRQ_TRG_SYSTICK_UPDATE = 0,
+    IRQ_TRG_SYSTICK_OS,
     
-}STM32F0XX_IRQ_INTERFACE;
+    IRQ_TRG_PVD,
+    IRQ_TRG_RTC,
+    IRQ_TRG_FLASH,
+    IRQ_TRG_RCC,
+    IRQ_TRG_EXTI0_1,
+    IRQ_TRG_EXTI2_3,
+    IRQ_TRG_EXTI4_15,
+    IRQ_TRG_TS,
+    IRQ_TRG_DMA1_Channel1,
+    IRQ_TRG_DMA1_Channel2_3,
+    IRQ_TRG_DMA1_Channel4_5,
+    IRQ_TRG_ADC1_COMP,
+    IRQ_TRG_TIM1_BRK_UP_TRG_COM,
+    IRQ_TRG_TIM1_CC,
+    IRQ_TRG_TIM2,
+    IRQ_TRG_TIM3,
+    IRQ_TRG_TIM6_DAC,
+    IRQ_TRG_TIM14,
+    IRQ_TRG_TIM15,
+    IRQ_TRG_TIM16,
+    IRQ_TRG_TIM17,
+    IRQ_TRG_I2C1,
+    IRQ_TRG_I2C2,
+    IRQ_TRG_SPI1,
+    IRQ_TRG_SPI2,
+    IRQ_TRG_USART1,
+    IRQ_TRG_USART2,
+    
+}IRQ_TRIGGER_SOURCE;
 
-extern STM32F0XX_IRQ_INTERFACE  g_IRQInterface;
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,6 +59,23 @@ void HAL_IRQ_NullEntry(void);
   * @retval None
   */
 void HAL_IRQ_Init(void);
+
+
+/**
+  * @brief  设置中断触发回调
+  * @param  ptr 回调指针
+  * @param  ulTrgSource 触发源
+  * @retval None
+  */
+void HAL_IRQ_SetTrgCallback(void (*ptr)(void), uint32_t ulTrgSource);
+
+
+/**
+  * @brief  释放中断触发回调
+  * @param  ulTrgSource 触发源
+  * @retval None
+  */
+void HAL_IRQ_ReleaseTrgCallback(uint32_t ulTrgSource);
 
 
 #ifdef __cplusplus
