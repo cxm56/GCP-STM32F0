@@ -2326,43 +2326,25 @@
   <group>
     <name>Application</name>
     <file>
+      <name>$PROJ_DIR$\..\Application\GC_CtrlIOTable.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Application\GC_CtrlIOTable.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\Application\GC_HardwareDef.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Application\GC_HwCfg.c</name>
+      <name>$PROJ_DIR$\..\Application\GC_HwCtrl.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Application\GC_HwCfg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_IOCtrl.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_IOCtrl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_KeyProc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_KeyProc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_LedCtrl.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_LedCtrl.h</name>
+      <name>$PROJ_DIR$\..\Application\GC_HwCtrl.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Application\GC_MainProc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Application\GC_MainProc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_SysCtrl.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Application\GC_SysCtrl.h</name>
     </file>
   </group>
   <group>
@@ -2508,12 +2490,6 @@
         <name>$PROJ_DIR$\..\SysCore\Drivers\stm32f0xx_dma.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\SysCore\Drivers\stm32f0xx_exti.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\SysCore\Drivers\stm32f0xx_exti.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\SysCore\Drivers\stm32f0xx_flash.c</name>
       </file>
       <file>
@@ -2621,6 +2597,12 @@
     </group>
     <group>
       <name>EXTI</name>
+      <file>
+        <name>$PROJ_DIR$\..\SysPeripheral\EXTI\EXTI.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\SysPeripheral\EXTI\EXTI.h</name>
+      </file>
     </group>
     <group>
       <name>FLASH</name>

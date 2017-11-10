@@ -17,9 +17,9 @@ extern "C"
   * @param  nPort 端口号
   * @param  nPin  引脚号
   * @param  uTrgSource 触发源
-  * @retval None
+  * @retval 0-成功 非0-失败
   */
-void HAL_EXTI_Init(uint16_t nPort, uint16_t nPin, uint8_t uTrgSource);
+uint32_t HAL_EXTI_Init(uint16_t nPort, uint16_t nPin, uint8_t uTrgSource);
 
 
 #ifdef __cplusplus
