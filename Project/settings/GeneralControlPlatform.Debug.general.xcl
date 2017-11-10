@@ -1,0 +1,15 @@
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armproc.dll" 
+
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armstlink2.dll" 
+
+"F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\Project\Debug\Exe\GeneralControlPlatform.out" 
+
+--plugin "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armbat.dll" 
+
+--device_macro "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\config\debugger\ST\STM32F0xx.dmac" 
+
+--flash_loader "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\config\flashloader\ST\FlashSTM32F03xx4.board" 
+
+
+
+

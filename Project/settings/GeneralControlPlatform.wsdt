@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>GeneralControlPlatform/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>16</ColumnWidth0><ColumnWidth1>705</ColumnWidth1><ColumnWidth2>188</ColumnWidth2><ColumnWidth3>47</ColumnWidth3></Build>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>218</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>21</ColumnWidth0><ColumnWidth1>898</ColumnWidth1></Debug-Log>
+      <TerminalIO/>
+      <Find-in-Files>
+        
+        
+        
+        
+      <ColumnWidth0>280</ColumnWidth0><ColumnWidth1>46</ColumnWidth1><ColumnWidth2>421</ColumnWidth2><ColumnWidth3>187</ColumnWidth3></Find-in-Files>
+      <Select-Ambiguous-Definitions>
+        
+        
+        
+      <ColumnWidth0>327</ColumnWidth0><ColumnWidth1>46</ColumnWidth1><ColumnWidth2>561</ColumnWidth2></Select-Ambiguous-Definitions>
+    <Find-All-Declarations><ColumnWidth0>341</ColumnWidth0><ColumnWidth1>48</ColumnWidth1><ColumnWidth2>585</ColumnWidth2></Find-All-Declarations></Static>
+    <Windows>
+      
+      
+    <Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-31315-22004</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-2730-27043</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-18938-4205</Identity>
+            <TabName>Find in Files</TabName>
+            <Factory>Find-in-Files</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-9713-23288</Identity>
+            <TabName>Ambiguous Definitions</TabName>
+            <Factory>Select-Ambiguous-Definitions</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-7030-15024</Identity><TabName>Declarations</TabName><Factory>Find-All-Declarations</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd3>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-9295-22007</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>GeneralControlPlatform</ExpandedNode><ExpandedNode>GeneralControlPlatform/Application</ExpandedNode><ExpandedNode>GeneralControlPlatform/CMU</ExpandedNode><ExpandedNode>GeneralControlPlatform/Main</ExpandedNode><ExpandedNode>GeneralControlPlatform/SysPeripheral</ExpandedNode><ExpandedNode>GeneralControlPlatform/SysPeripheral/HAL</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Application\GC_MainProc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>13</YPos2><SelStart2>1179</SelStart2><SelEnd2>1179</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Application\GC_LedCtrl.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>1527</SelStart2><SelEnd2>1527</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\HAL\HAL_Uart.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>163</YPos2><SelStart2>5603</SelStart2><SelEnd2>5708</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysInit\SYS_Init.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>47</YPos2><SelStart2>1744</SelStart2><SelEnd2>1744</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Application\GC_KeyProc.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>275</SelStart2><SelEnd2>275</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\Demo.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>816</SelStart2><SelEnd2>816</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\HAL\HAL_Exti.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>31</YPos2><SelStart2>1223</SelStart2><SelEnd2>1223</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\HAL\HAL_Exti.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>420</SelStart2><SelEnd2>420</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\HAL\HAL_Gpio.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>12</YPos2><SelStart2>1173</SelStart2><SelEnd2>1202</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysCore\Core\stm32f0xx.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>742</YPos2><SelStart2>53100</SelStart2><SelEnd2>53100</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\Main\Main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>595</SelStart2><SelEnd2>595</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysPeripheral\HAL\HAL_TimeDelay.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>551</SelStart2><SelEnd2>551</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\SysCore\Core\ring_buffer.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>80</YPos2><SelStart2>3427</SelStart2><SelEnd2>3427</SelEnd2></Tab><ActiveTab>12</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-07000938><key>iaridepm.enu1</key></Toolbar-07000938></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>324</Bottom><Right>309</Right><x>-2</x><y>-2</y><xscreen>365</xscreen><yscreen>83</yscreen><sizeHorzCX>285603</sizeHorzCX><sizeHorzCY>84008</sizeHorzCY><sizeVertCX>243349</sizeVertCX><sizeVertCY>660931</sizeVertCY></Rect></Wnd3></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>292</Bottom><Right>1280</Right><x>-2</x><y>-2</y><xscreen>1282</xscreen><yscreen>294</yscreen><sizeHorzCX>1003130</sizeHorzCX><sizeHorzCY>297571</sizeHorzCY><sizeVertCX>285603</sizeVertCX><sizeVertCY>84008</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+
