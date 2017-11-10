@@ -222,7 +222,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state></state>
+          <state>pa082</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2006,6 +2006,12 @@
       <file>
         <name>$PROJ_DIR$\..\PeriDrivers\Eeprom\at24cxx.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\PeriDrivers\Eeprom\Eeprom.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\PeriDrivers\Eeprom\Eeprom.h</name>
+      </file>
     </group>
     <group>
       <name>NixieTube</name>
@@ -2323,6 +2329,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\SysPeripheral\KEY\KEY.h</name>
+      </file>
+    </group>
+    <group>
+      <name>SysCtrl</name>
+      <file>
+        <name>$PROJ_DIR$\..\SysPeripheral\SysCtrl\SysCtrl.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\SysPeripheral\SysCtrl\SysCtrl.h</name>
       </file>
     </group>
     <group>

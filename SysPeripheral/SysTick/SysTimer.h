@@ -66,6 +66,7 @@ uBit8 SysTime_CheckExpiredState(SYS_TIME_DATA *pTimeData);
   * @brief  简单的延时函数
   * @param  ulDelay 延时参数,无标准单位
   * @retval None
+  * @note   在100MHz的系统中测试,入参100,延时大概是10us
   */
 void SysTime_SimpleDelay(uBit32 ulDelay);
 

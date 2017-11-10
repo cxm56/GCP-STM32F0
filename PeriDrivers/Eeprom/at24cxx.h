@@ -17,16 +17,17 @@ typedef enum
     AT24C32_PAGE_SIZE = 32,
     AT24C64_PAGE_SIZE = 32,
     
-}AT24Cxx_PAGE_SIZE;
+}AT24CXX_PAGE_SIZE;
 
 
-void AT24Cxx_HwCtrlInterFaces(void    *Data,
-                              void    (*SetSDA)(void *Data, uBit8 State),
-                              void    (*SetSCL)(void *Data, uBit8 State),
-                              uBit8 (*GetSDA)(void *Data),
-                              uBit8 (*GetSCL)(void *Data),
-                              void    (*BitDelay)(void *Data),
-                              AT24Cxx_PAGE_SIZE    PAGE_SIZE);
+void AT24Cxx_InitInterface(void   *Data,
+                           void   (*SetSDA)  (void *Data, uBit8 State),
+                           void   (*SetSCL)  (void *Data, uBit8 State),
+                           uBit8  (*GetSDA)  (void *Data),
+                           uBit8  (*GetSCL)  (void *Data),
+                           void   (*BitDelay)(void *Data),
+                           AT24CXX_PAGE_SIZE    PAGE_SIZE);
+
 uBit8 AT24Cxx_RandomRead(uBit16 nAddr);
 void AT24Cxx_WriteByte(uBit16 nAddr, uBit8 cWriteData);
 void AT24Cxx_ReadMultiBytes(uBit16 nAddr, uBit8 *pReadBuff, uBit32 iNum);

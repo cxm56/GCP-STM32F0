@@ -13,11 +13,12 @@ extern "C"
  ****************************************************************************/
 
 /**
-  * @brief  串口创建(初始化)
+  * @brief  串口初始化
   * @param  uUartNode 串口节点号
+  * @param  ulBaudRate 波特率
   * @retval 0-成功  非0-失败
   */
-uBit32 UART_Create(uBit8 uUartNode);
+uBit32 UART_Init(uBit8 uUartNode, uBit32 ulBaudRate);
 
 
 /**

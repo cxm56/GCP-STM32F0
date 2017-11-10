@@ -14,12 +14,21 @@ typedef struct
 //IO资源控制表定义
 typedef struct
 {
-    GPIO_DATA *pOutIOTable; //输出IO表
-    GPIO_DATA *pInIOTable;  //输入IO表
-    uBit32 ulOutIOCount;    //输出IO数
-    uBit32 ulInIOCount;     //输入IO数
+    GPIO_DATA *pOutputGroup;    //输出IO组
+    GPIO_DATA *pInputGroup;     //输入IO组
+    uBit32 ulOutputGroupLen;    //输出IO数
+    uBit32 ulInputGroupLen;     //输入IO数
     
 }GPIO_CTRL_TABLE;
+
+//GPIO配置模式
+typedef enum
+{
+    GOIO_MODE_INPUT,
+    GPIO_MODE_OUPUT,
+    GPIO_MODE_OD   ,
+    
+}GPIO_CFG_MODE;
 
 
 #ifdef __cplusplus
@@ -29,7 +38,7 @@ extern "C"
 
 
 /*****************************************************************************
- * IO资源控制表相关接口
+ * IO配置相关接口
  ****************************************************************************/
 
 /**
@@ -41,11 +50,23 @@ uBit32 GPIO_SetCtrlTable(GPIO_CTRL_TABLE *pTable);
 
 
 /**
+  * @brief  IO组初始化
+  * @param  pIOGroup IO组指针
+  * @param  ulGroupLen 组长度
+  * @param  CfgMode  要配置的IO模式
+  * @retval 0-成功  非0-失败
+  */
+uBit32 GPIO_InitIOGroup(GPIO_DATA *pIOGroup, uBit32 ulGroupLen, GPIO_CFG_MODE CfgMode);
+
+
+/**
   * @brief  配置表IO初始化
   * @param  pTable IO资源配置表指针
   * @retval 0-成功  非0-失败
+  * @note   此函数会把输出组的IO设置成输出模式,输入组的IO设置为输入模式;若要配置
+  *         成开漏模式,需在执行本函数后另行配置(调用GPIO_InitIOGroup);
   */
-uBit32 GPIO_InitTableIO(GPIO_CTRL_TABLE *pTable);
+uBit32 GPIO_InitIOTable(GPIO_CTRL_TABLE *pTable);
 
 
 /*****************************************************************************

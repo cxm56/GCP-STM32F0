@@ -14,7 +14,7 @@ typedef struct
       * @param  uUartNode 串口节点号
       * @retval 0-成功  非0-失败
       */
-    uBit32 (*pf_UART_Create)(uBit8 uUartNode);
+    uBit32 (*pf_UART_Create)(uBit8 uUartNode, uBit32 ulBaudRate);
     
     /**
       * @brief  端口打开

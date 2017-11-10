@@ -43,30 +43,26 @@
 static I2C_BIT_OPS_TYPE         I2C_BitOps = {0};
 static I2C_BUS_DEVICE_OPS_TYPE  AT_I2C_DEV = {0};
 
-static AT24Cxx_PAGE_SIZE AT_PAGE_SIZE;
+static AT24CXX_PAGE_SIZE AT_PAGE_SIZE;
 
 
 /**
   * @brief  设置外部控制接口
-  * @param  AT_PortInit 端口初始化函数
+  * @param  Data 端口初始化函数
   * @param  SetSDA 设置SDA的电平
   * @param  SetSCL 设置SCL的电平
   * @param  GetSDA 获取SDA的电平
   * @param  GetSCL 获取SCL的电平
-  * @param  BitDelayUs 微秒级延时函数
+  * @param  BitDelay 微秒级延时函数
   * @retval 无
-  * @note  值得注意的是, I2C_BusDeviceControl 函数要在 I2C_BusDevieInit函数之后执行,因为在设备初
-  *  始化函数执行之前,设备框架中的函数指针尚未和设备挂接,这样的情况下, I2C_BusDeviceControl 指向NULL,
-  *  这时候无法将 I2C_BitOps 的指针正确地传递给BUS变量,当BUS变量调用 I2C_BitOps 的指针(野指针)时,
-  *  会导致错误的指针跳转,从而让系统跑飞.....
   */
-void AT24Cxx_HwCtrlInterFaces(void    *Data,
-                              void    (*SetSDA)(void *Data, uBit8 State),
-                              void    (*SetSCL)(void *Data, uBit8 State),
-                              uBit8 (*GetSDA)(void *Data),
-                              uBit8 (*GetSCL)(void *Data),
-                              void    (*BitDelay)(void *Data),
-                              AT24Cxx_PAGE_SIZE    PAGE_SIZE)
+void AT24Cxx_InitInterface(void   *Data,
+                           void   (*SetSDA)  (void *Data, uBit8 State),
+                           void   (*SetSCL)  (void *Data, uBit8 State),
+                           uBit8  (*GetSDA)  (void *Data),
+                           uBit8  (*GetSCL)  (void *Data),
+                           void   (*BitDelay)(void *Data),
+                           AT24CXX_PAGE_SIZE    PAGE_SIZE)
 {
     I2C_BitOps.Data = Data;
     I2C_BitOps.pf_I2C_SetSDA = SetSDA;

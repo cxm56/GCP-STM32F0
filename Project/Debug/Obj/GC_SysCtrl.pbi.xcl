@@ -1,18 +1,18 @@
-"F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\Application\GC_SysCtrl.c"
+"E:\GitHub\GCP-STM32F0\Application\GC_SysCtrl.c"
 -std=c99
 -ferror-limit=100
 -I
-F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\Project/../SysCore/Core
+E:\GitHub\GCP-STM32F0\Project/../SysCore/Core
 -I
-F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\Project/../SysCore/Drivers
+E:\GitHub\GCP-STM32F0\Project/../SysCore/Drivers
 -I
 D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\inc
 -I
 D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\inc\c
 -I
-F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\SysCore\Core
+E:\GitHub\GCP-STM32F0\SysCore\Core
 -I
-F:\5. 工作文件\项目\GCP-通用控制平台\GCP-STM32F0XX\SysCore\Drivers
+E:\GitHub\GCP-STM32F0\SysCore\Drivers
 -DSTM32F030=1
 -DUSE_STDPERIPH_DRIVER=1
 -D__CHAR_BITS__=8

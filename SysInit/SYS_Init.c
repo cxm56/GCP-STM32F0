@@ -41,7 +41,7 @@ uBit32 SYS_InitPerl(void)
     SysTick_Init();
     
     //创建串口0
-    UART_Create(0);
+    UART_Init(0, 115200);
     
     return 0;
 }

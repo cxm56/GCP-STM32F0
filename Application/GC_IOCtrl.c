@@ -44,6 +44,16 @@ static GPIO_DATA m_OutputIOTable[] =
 };
 
 
+//控制IO表
+const GPIO_CTRL_TABLE GC_CtrlIOTable = 
+{
+    m_OutputIOTable,
+    m_InputIOTable,
+    sizeof(m_OutputIOTable)/sizeof(GPIO_DATA),
+    sizeof(m_InputIOTable)/sizeof(GPIO_DATA),
+    
+};
+
 
 /**
   * @brief  IO初始化
@@ -52,15 +62,8 @@ static GPIO_DATA m_OutputIOTable[] =
   */
 void GC_IOInit(void)
 {
-    GPIO_CTRL_TABLE GC_CtrlIOTable = {0};
-    
-    GC_CtrlIOTable.pOutIOTable = m_OutputIOTable;
-    GC_CtrlIOTable.pInIOTable  = m_InputIOTable;
-    GC_CtrlIOTable.ulOutIOCount = sizeof(m_OutputIOTable)/sizeof(GPIO_DATA);
-    GC_CtrlIOTable.ulInIOCount  = 0;
-
-    GPIO_SetCtrlTable(&GC_CtrlIOTable);
-    GPIO_InitTableIO(&GC_CtrlIOTable);
+    GPIO_SetCtrlTable((GPIO_CTRL_TABLE *)&GC_CtrlIOTable);
+    GPIO_InitIOTable((GPIO_CTRL_TABLE *)&GC_CtrlIOTable);
     
 }
 

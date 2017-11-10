@@ -49,7 +49,7 @@ static GPIO_CTRL_TABLE  m_GpioCtrlTable = {0};  //IO资源配置表
 
 
 /*****************************************************************************
- * IO资源控制表相关接口
+ * IO配置相关接口
  ****************************************************************************/
 
 /**
@@ -71,11 +71,59 @@ uBit32 GPIO_SetCtrlTable(GPIO_CTRL_TABLE *pTable)
 
 
 /**
+  * @brief  IO组初始化
+  * @param  pIOGroup IO组指针
+  * @param  ulGroupLen 组长度
+  * @param  CfgMode  要配置的IO模式
+  * @retval 0-成功  非0-失败
+  */
+uBit32 GPIO_InitIOGroup(GPIO_DATA *pIOGroup, uBit32 ulGroupLen, GPIO_CFG_MODE CfgMode)
+{
+    switch (CfgMode)
+    {
+    case GOIO_MODE_INPUT:
+        {
+            for (int i = 0; i < ulGroupLen; i++)
+            {
+                HAL_GPIO_ConfigInput(pIOGroup[i].nPort, pIOGroup[i].nPin);
+            }
+            
+            break;
+        }
+    case GPIO_MODE_OUPUT:
+        {
+            for (int i = 0; i < ulGroupLen; i++)
+            {
+                HAL_GPIO_ConfigOutput(pIOGroup[i].nPort, pIOGroup[i].nPin);
+            }
+            
+            break;
+        }
+    case GPIO_MODE_OD:
+        {
+            for (int i = 0; i < ulGroupLen; i++)
+            {
+                HAL_GPIO_ConfigOD(pIOGroup[i].nPort, pIOGroup[i].nPin);
+            }
+            
+            break;
+        }
+        
+    default: break;
+    }
+    
+    return 0;
+}
+
+
+/**
   * @brief  配置表IO初始化
   * @param  pTable IO资源配置表指针
   * @retval 0-成功  非0-失败
+  * @note   此函数会把输出组的IO设置成输出模式,输入组的IO设置为输入模式;若要配置
+  *         成开漏模式,需在执行本函数后另行配置(调用GPIO_InitIOGroup);
   */
-uBit32 GPIO_InitTableIO(GPIO_CTRL_TABLE *pTable)
+uBit32 GPIO_InitIOTable(GPIO_CTRL_TABLE *pTable)
 {
     if (pTable == NULL)
     {
@@ -83,15 +131,15 @@ uBit32 GPIO_InitTableIO(GPIO_CTRL_TABLE *pTable)
     }
     
     //配置输出IO
-    for (int i = 0; i < pTable->ulOutIOCount; i++)
+    for (int i = 0; i < pTable->ulOutputGroupLen; i++)
     {
-        HAL_GPIO_ConfigOutput(pTable->pOutIOTable[i].nPort, pTable->pOutIOTable[i].nPin);
+        HAL_GPIO_ConfigOutput(pTable->pOutputGroup[i].nPort, pTable->pOutputGroup[i].nPin);
     }
     
     //配置输入IO
-    for (int i = 0; i < pTable->ulInIOCount; i++)
+    for (int i = 0; i < pTable->ulInputGroupLen; i++)
     {
-        HAL_GPIO_ConfigInput(pTable->pInIOTable[i].nPort, pTable->pInIOTable[i].nPin);
+        HAL_GPIO_ConfigInput(pTable->pInputGroup[i].nPort, pTable->pInputGroup[i].nPin);
     }
     
     return 0;
@@ -110,10 +158,10 @@ uBit32 GPIO_InitTableIO(GPIO_CTRL_TABLE *pTable)
   */
 void GPIO_SetOutputState(uBit32 ulOutputNO, bool bState)
 {
-    if (ulOutputNO <= m_GpioCtrlTable.ulOutIOCount)
+    if (ulOutputNO <= m_GpioCtrlTable.ulOutputGroupLen)
     {
-        HAL_GPIO_SetOutputState(m_GpioCtrlTable.pOutIOTable[ulOutputNO].nPort,
-                                m_GpioCtrlTable.pOutIOTable[ulOutputNO].nPin,
+        HAL_GPIO_SetOutputState(m_GpioCtrlTable.pOutputGroup[ulOutputNO].nPort,
+                                m_GpioCtrlTable.pOutputGroup[ulOutputNO].nPin,
                                 bState);
     }
     
@@ -139,10 +187,10 @@ void GPIO_ToggleOutputState(uBit32 ulOutputNO)
   */
 bool GPIO_GetOutputState(uBit32 ulOutputNO)
 {
-    if (ulOutputNO <= m_GpioCtrlTable.ulOutIOCount)
+    if (ulOutputNO <= m_GpioCtrlTable.ulOutputGroupLen)
     {
-        return HAL_GPIO_GetIOState(m_GpioCtrlTable.pOutIOTable[ulOutputNO].nPort,
-                                   m_GpioCtrlTable.pOutIOTable[ulOutputNO].nPin);
+        return HAL_GPIO_GetIOState(m_GpioCtrlTable.pOutputGroup[ulOutputNO].nPort,
+                                   m_GpioCtrlTable.pOutputGroup[ulOutputNO].nPin);
     }
     
     return false;
@@ -156,10 +204,10 @@ bool GPIO_GetOutputState(uBit32 ulOutputNO)
   */
 bool GPIO_GetInputState(uBit32 ulInputNO)
 {
-    if (ulInputNO <= m_GpioCtrlTable.ulInIOCount)
+    if (ulInputNO <= m_GpioCtrlTable.ulInputGroupLen)
     {
-        return HAL_GPIO_GetIOState(m_GpioCtrlTable.pInIOTable[ulInputNO].nPort,
-                                   m_GpioCtrlTable.pInIOTable[ulInputNO].nPin);
+        return HAL_GPIO_GetIOState(m_GpioCtrlTable.pInputGroup[ulInputNO].nPort,
+                                   m_GpioCtrlTable.pInputGroup[ulInputNO].nPin);
     }
     
     return false;
@@ -289,19 +337,19 @@ static void GPIO_MAN_UpdateInputIOState(void)
 {
     uBit32 ulNewInputStateGroup[IO_MAX_GROUP] = {0};
     
-    if (m_GpioCtrlTable.ulInIOCount == 0)
+    if (m_GpioCtrlTable.ulInputGroupLen == 0)
     {
         return ;
     }
     
     //获取最新的IO状态
-    for (int iPinIndex = 0; iPinIndex < m_GpioCtrlTable.ulInIOCount; iPinIndex++)
+    for (int iPinIndex = 0; iPinIndex < m_GpioCtrlTable.ulInputGroupLen; iPinIndex++)
     {
         ulNewInputStateGroup[iPinIndex/IO_EACH_GROUP_PIN_COUNT] |= GPIO_GetInputState(iPinIndex) << (iPinIndex%IO_EACH_GROUP_PIN_COUNT);
     }
     
     //状态滤波
-    for (int iGrpIndex = 0; iGrpIndex < ((m_GpioCtrlTable.ulInIOCount - 1)/IO_EACH_GROUP_PIN_COUNT + 1); iGrpIndex++)
+    for (int iGrpIndex = 0; iGrpIndex < ((m_GpioCtrlTable.ulInputGroupLen - 1)/IO_EACH_GROUP_PIN_COUNT + 1); iGrpIndex++)
     {
         //假如当前组状态无变化,则整组的滤波计数清空;若有变化,则对每一位进行比较
         if (ulNewInputStateGroup[iGrpIndex] == m_ulInputStateGroup[iGrpIndex])
@@ -315,9 +363,9 @@ static void GPIO_MAN_UpdateInputIOState(void)
         {
             //计算当前组有效引脚的数量
             int iCurGroupPinCount = 0;  
-            if (iGrpIndex == ((m_GpioCtrlTable.ulInIOCount - 1)/IO_EACH_GROUP_PIN_COUNT))
+            if (iGrpIndex == ((m_GpioCtrlTable.ulInputGroupLen - 1)/IO_EACH_GROUP_PIN_COUNT))
             {
-                iCurGroupPinCount = m_GpioCtrlTable.ulInIOCount % IO_EACH_GROUP_PIN_COUNT;
+                iCurGroupPinCount = m_GpioCtrlTable.ulInputGroupLen % IO_EACH_GROUP_PIN_COUNT;
             }
             else 
             {
@@ -357,19 +405,19 @@ static void GPIO_MAN_UpdateOutputIOState(void)
 {
     uBit32 ulNewOutputStateGroup[IO_MAX_GROUP] = {0};
     
-    if (m_GpioCtrlTable.ulOutIOCount == 0)
+    if (m_GpioCtrlTable.ulOutputGroupLen == 0)
     {
         return ;
     }
     
     //获取最新的IO状态
-    for (int iPinIndex = 0; iPinIndex < m_GpioCtrlTable.ulOutIOCount; iPinIndex++)
+    for (int iPinIndex = 0; iPinIndex < m_GpioCtrlTable.ulOutputGroupLen; iPinIndex++)
     {
         ulNewOutputStateGroup[iPinIndex/IO_EACH_GROUP_PIN_COUNT] |= GPIO_GetOutputState(iPinIndex) << (iPinIndex%IO_EACH_GROUP_PIN_COUNT);
     }
     
     //状态滤波
-    for (int iGrpIndex = 0; iGrpIndex < ((m_GpioCtrlTable.ulOutIOCount - 1)/32 + 1); iGrpIndex++)
+    for (int iGrpIndex = 0; iGrpIndex < ((m_GpioCtrlTable.ulOutputGroupLen - 1)/32 + 1); iGrpIndex++)
     {
         //假如当前组状态无变化,则整组的滤波计数清空;若有变化,则对每一位进行比较
         if (ulNewOutputStateGroup[iGrpIndex] == m_ulOutputStateGroup[iGrpIndex])
@@ -383,9 +431,9 @@ static void GPIO_MAN_UpdateOutputIOState(void)
         {
             //计算当前组有效引脚的数量
             int iCurGroupPinCount = 0;  
-            if (iGrpIndex == ((m_GpioCtrlTable.ulOutIOCount - 1)/IO_EACH_GROUP_PIN_COUNT))
+            if (iGrpIndex == ((m_GpioCtrlTable.ulOutputGroupLen - 1)/IO_EACH_GROUP_PIN_COUNT))
             {
-                iCurGroupPinCount = m_GpioCtrlTable.ulOutIOCount % IO_EACH_GROUP_PIN_COUNT;
+                iCurGroupPinCount = m_GpioCtrlTable.ulOutputGroupLen % IO_EACH_GROUP_PIN_COUNT;
             }
             else 
             {

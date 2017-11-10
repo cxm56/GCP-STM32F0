@@ -25,13 +25,14 @@
  ****************************************************************************/
 
 /**
-  * @brief  串口创建(初始化)
-  * @param  None
+  * @brief  串口初始化
+  * @param  uUartNode 串口节点号
+  * @param  ulBaudRate 波特率
   * @retval 0-成功  非0-失败
   */
-uBit32 UART_Create(uBit8 uUartNode)
+uBit32 UART_Init(uBit8 uUartNode, uBit32 ulBaudRate)
 {
-    HAL_UART_Init(uUartNode, 115200);
+    HAL_UART_Init(uUartNode, ulBaudRate);
     
     return 0;
 }
@@ -39,7 +40,7 @@ uBit32 UART_Create(uBit8 uUartNode)
 
 /**
   * @brief  串口打开
-  * @param  None
+  * @param  uUartNode 串口节点号
   * @retval 0-成功  非0-失败
   */
 uBit32 UART_Open(uBit8 uUartNode)
@@ -52,7 +53,7 @@ uBit32 UART_Open(uBit8 uUartNode)
 
 /**
   * @brief  串口关闭
-  * @param  None
+  * @param  uUartNode 串口节点号
   * @retval 0-成功  非0-失败
   */
 uBit32 UART_Close(uBit8 uUartNode)
@@ -65,7 +66,7 @@ uBit32 UART_Close(uBit8 uUartNode)
 
 /**
   * @brief  数据接收处理(接收线程)
-  * @param  None
+  * @param  uUartNode 串口节点号
   * @retval None
   * @retval 本函数是应用于非中断接收的情况,单独一个线程做数据接收
   */

@@ -81,6 +81,7 @@ uBit32 UART_CMU_GetPack(uBit8 uUartNode, uBit32 *pID,  uBit32* pRcvLen, uBit8** 
     return 1;
 }
 
+
 #define FRAME_HAND              ("HCZN")
 #define FRAME_HAND_SIZE         (4)
 #define FRAME_LEN_SIZE          (2)
@@ -156,7 +157,7 @@ uBit32 UART_CMU_GetMaxSendLen(uBit8 uUartNode)
   */
 void UART_ExportInterface(UART_INTERFACE *pUartInterface)
 {
-    pUartInterface->pf_UART_Create          = UART_Create       ;
+    pUartInterface->pf_UART_Create          = UART_Init       ;
     pUartInterface->pf_UART_Open            = UART_Open         ;
     pUartInterface->pf_UART_Close           = UART_Close        ;
 //    pUartInterface->pf_UART_RecvHandler     = UART_RecvHandler  ;
