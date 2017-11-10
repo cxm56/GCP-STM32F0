@@ -102,6 +102,20 @@ bool HAL_GPIO_GetIOState(uint16_t nPort, uint16_t nPin)
 
 
 /**
+  * @brief  开漏IO配置
+  * @param  nPort IO端口号
+  * @param  nPin  IO引脚号
+  * @retval None
+  */
+void HAL_GPIO_ConfigOD(uint16_t nPort, uint16_t nPin)
+{
+    HAL_GPIO_ModeConfig(nPort, nPin, GPIO_GP_OD_H);
+    
+}
+
+
+/**
+  * @brief  输入IO配置
   * @param  nPort IO端口号
   * @param  nPin  IO引脚号
   * @retval None
