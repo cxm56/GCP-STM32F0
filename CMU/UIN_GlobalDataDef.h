@@ -19,58 +19,60 @@ Copyright (c) 2013, 东莞华科精机有限公司 All rights reserved.
 #ifndef _UIN_GLOBAL_DATA_DEF_
 #define _UIN_GLOBAL_DATA_DEF_
 
-//#define RS_MONITOR_ENALBE        //通信性能测试开关
-//#define RS_RECORD_ENABLE        //使能通信出错时记录通信性能状态数据
+//#define CMU_SUPPORT_PERIO                       //支持周期指令
+//#define CMU_SUPPORT_CRD                         //支持坐标系相关指令
 
 
 //UIN模块传输监视数据-------------------------------上位机
 typedef struct uin_rs_ms_data
-{
-    //发送性能检测
-    unsigned long ulSendBlockCount;        //发送的数据块总数(成功或失败次数)
-    unsigned long ulBlockSendSucCount;    //数据块发送成功次数
-    unsigned long ulSendFailCount;        //发送数据失败次数
-    
-    //接收性能检测
-    unsigned long ulRcvBlockCount;        //接收到完整数据块的总数(完整、非完整)
-    unsigned long ulBlockRcvSucCount;    //
-    unsigned long ulLastTimeOutID;        //最后一次接收超时指令ID(重试后依然超时记录)
-    unsigned long ulRcvTimeOutCount;    //接收回应包超时次数
-    
-    //时间监测
-    unsigned long ulSentBlockTime;        //发送数据块最长时间(ms)
-    unsigned long ulGetResponceTime;    //等待回应包最长耗时(ms)
-    
-    //其他特殊监视
-    unsigned long ulIOSetCmdCount;        //IO输出指令执行次数(成功发送)
+{                                                       
+    //发送性能检测                           
+    unsigned long ulSendBlockCount;          //发送的数据块总数(成功或失败次数)
+    unsigned long ulBlockSendSucCount;       //数据块发送成功次数
+    unsigned long ulSendFailCount;           //发送数据失败次数
+                                             
+    //接收性能检测                           
+    unsigned long ulRcvBlockCount;           //接收到完整数据块的总数(完整、非完整)    
+    unsigned long ulBlockRcvSucCount;        //    
+    unsigned long ulLastTimeOutID;           //最后一次接收超时指令ID(重试后依然超时记录)    
+    unsigned long ulRcvTimeOutCount;         //接收回应包超时次数    
+                                             
+    //时间监测                               
+    unsigned long ulSentBlockTime;           //发送数据块最长时间(ms)
+    unsigned long ulGetResponceTime;         //等待回应包最长耗时(ms)
+                                             
+    //其他特殊监视                           
+    unsigned long ulIOSetCmdCount;           //IO输出指令执行次数(成功发送)
     unsigned long ulRev[4];
 }UIN_RS_MS_DATA;
+    
+
 
 //-------------------------------------------------下位机
 //CMU模块监视数据
 typedef struct cmu_rs_ms_data
 {
     //发送性能检测
-    unsigned long ulSendBlockCount;        //发送的数据块总数(成功或失败次数)
-    unsigned long ulBlockSendSucCount;    //数据块发送成功次数
-    unsigned long ulSendFailCount;        //发送数据失败次数
-    
-    //接收性能检测
-    unsigned long ulRcvBlockCount;        //接收到完整数据块的总数(完整、非完整)
-    unsigned long ulBlockRcvSucCount;    //
-    
-    //其他监测
-    unsigned long ulOutputSetCount;        //IO输出指令执行次数
-    unsigned long ulRev[4];
-}CMU_RS_MS_DATA;
-
-//CAN总线传输监控数据
-typedef struct can_rs_ms_data
-{
-    unsigned short nSendPulseFailTimes;    //发送脉冲回应包失败次数
-    unsigned short nSendRetryFailTimes;    //发送重发失败次数
-    unsigned short nRcvPulseFailTimes;    //接收脉冲回应包失败次数
-    unsigned short nIOSetTimes;            //IO操作次数
+    unsigned long ulSendBlockCount;         //发送的数据块总数(成功或失败次数)
+    unsigned long ulBlockSendSucCount;      //数据块发送成功次数
+    unsigned long ulSendFailCount;          //发送数据失败次数
+                                            
+    //接收性能检测                        
+    unsigned long ulRcvBlockCount;          //接收到完整数据块的总数(完整、非完整)
+    unsigned long ulBlockRcvSucCount;       //
+                                            
+    //其他监测                              
+    unsigned long ulOutputSetCount;         //IO输出指令执行次数
+    unsigned long ulRev[4];                 
+}CMU_RS_MS_DATA;                            
+                                            
+//CAN总线传输监控数据                       
+typedef struct can_rs_ms_data               
+{                                           
+    unsigned short nSendPulseFailTimes;     //发送脉冲回应包失败次数
+    unsigned short nSendRetryFailTimes;     //发送重发失败次数
+    unsigned short nRcvPulseFailTimes;      //接收脉冲回应包失败次数
+    unsigned short nIOSetTimes;             //IO操作次数
     unsigned short nRev[4];
 }CAN_RS_MS_DATA;
 

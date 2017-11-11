@@ -93,5 +93,9 @@ extern uBit32 COM_AL_GetMaxSendPacks(void);
 
 
 extern void* CMU_Malloc(uBit32 ulSize);
+
+
 extern uBit32 COM_AL_GetComType(void);
+
+
 #endif
