@@ -412,7 +412,7 @@ void HAL_UART_SendStr(uint8_t uUartNode, uint8_t *pSBuff)
 uint32_t HAL_UART_RecvBuff(uint8_t uUartNode, void *pRBuff, uint32_t ulSize)
 {
     
-    return 0;
+    return RingBuffer_PopMult(&m_RxRing[uUartNode], pRBuff, ulSize);
 }
 
 

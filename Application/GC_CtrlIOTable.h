@@ -6,6 +6,7 @@
 typedef enum
 {
     GC_OUTPUT_IO_LED,
+    GC_OUTPUT_IO_BLE_EN,
     
 }GC_OUTPUT_IO_TABLE;
 

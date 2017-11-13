@@ -17,6 +17,9 @@
 #include "HAL_IRQHandler.h"
 
 
+#define STM32_GPIO_INT_COUNT                 (16)
+
+
 typedef struct 
 {
     void (*pf_SysTick_Update                )(void);
@@ -25,9 +28,7 @@ typedef struct
     void (*pf_RTC_IRQHandler                )(void);
     void (*pf_FLASH_IRQHandler              )(void);
     void (*pf_RCC_IRQHandler                )(void);
-    void (*pf_EXTI0_1_IRQHandler            )(void);
-    void (*pf_EXTI2_3_IRQHandler            )(void);
-    void (*pf_EXTI4_15_IRQHandler           )(void);
+    
     void (*pf_TS_IRQHandler                 )(void);
     void (*pf_DMA1_Channel1_IRQHandler      )(void);
     void (*pf_DMA1_Channel2_3_IRQHandler    )(void);
@@ -48,6 +49,8 @@ typedef struct
     void (*pf_SPI2_IRQHandler               )(void);
     void (*pf_USART1_IRQHandler             )(void);
     void (*pf_USART2_IRQHandler             )(void);
+    
+    void (*pf_EXTI_IRQHandler [STM32_GPIO_INT_COUNT])(void);
     
 }STM32F0XX_IRQ_INTERFACE;
 
@@ -76,9 +79,7 @@ void HAL_IRQ_Init(void)
     g_IRQInterface.pf_RTC_IRQHandler                 = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_FLASH_IRQHandler               = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_RCC_IRQHandler                 = HAL_IRQ_NullEntry;
-    g_IRQInterface.pf_EXTI0_1_IRQHandler             = HAL_IRQ_NullEntry;
-    g_IRQInterface.pf_EXTI2_3_IRQHandler             = HAL_IRQ_NullEntry;
-    g_IRQInterface.pf_EXTI4_15_IRQHandler            = HAL_IRQ_NullEntry;
+    
     g_IRQInterface.pf_TS_IRQHandler                  = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_DMA1_Channel1_IRQHandler       = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_DMA1_Channel2_3_IRQHandler     = HAL_IRQ_NullEntry;
@@ -99,6 +100,12 @@ void HAL_IRQ_Init(void)
     g_IRQInterface.pf_SPI2_IRQHandler                = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_USART1_IRQHandler              = HAL_IRQ_NullEntry;
     g_IRQInterface.pf_USART2_IRQHandler              = HAL_IRQ_NullEntry;
+    
+    //EXTI Group
+    for (int i = 0; i < STM32_GPIO_INT_COUNT; i++)
+    {
+        g_IRQInterface.pf_EXTI_IRQHandler[i] = HAL_IRQ_NullEntry;
+    }
     
 }
 
@@ -127,9 +134,24 @@ void HAL_IRQ_SetTrgCallback(void (*ptr)(void), uint32_t ulTrgSource)
     case IRQ_TRG_RTC:                   g_IRQInterface.pf_RTC_IRQHandler                  = ptr; break;
     case IRQ_TRG_FLASH:                 g_IRQInterface.pf_FLASH_IRQHandler                = ptr; break;
     case IRQ_TRG_RCC:                   g_IRQInterface.pf_RCC_IRQHandler                  = ptr; break;
-    case IRQ_TRG_EXTI0_1:               g_IRQInterface.pf_EXTI0_1_IRQHandler              = ptr; break;
-    case IRQ_TRG_EXTI2_3:               g_IRQInterface.pf_EXTI2_3_IRQHandler              = ptr; break;
-    case IRQ_TRG_EXTI4_15:              g_IRQInterface.pf_EXTI4_15_IRQHandler             = ptr; break;
+    
+    case IRQ_TRG_EXTI0:
+    case IRQ_TRG_EXTI1:
+    case IRQ_TRG_EXTI2:
+    case IRQ_TRG_EXTI3:
+    case IRQ_TRG_EXTI4:
+    case IRQ_TRG_EXTI5:
+    case IRQ_TRG_EXTI6:
+    case IRQ_TRG_EXTI7:
+    case IRQ_TRG_EXTI8:
+    case IRQ_TRG_EXTI9:
+    case IRQ_TRG_EXTI10:
+    case IRQ_TRG_EXTI11:
+    case IRQ_TRG_EXTI12:
+    case IRQ_TRG_EXTI13:
+    case IRQ_TRG_EXTI14:
+    case IRQ_TRG_EXTI15:                g_IRQInterface.pf_EXTI_IRQHandler[ulTrgSource-IRQ_TRG_EXTI0] = ptr; break;
+    
     case IRQ_TRG_TS:                    g_IRQInterface.pf_TS_IRQHandler                   = ptr; break;
     case IRQ_TRG_DMA1_Channel1:         g_IRQInterface.pf_DMA1_Channel1_IRQHandler        = ptr; break;
     case IRQ_TRG_DMA1_Channel2_3:       g_IRQInterface.pf_DMA1_Channel2_3_IRQHandler      = ptr; break;
@@ -190,13 +212,87 @@ void SysTick_Handler(void)
     
 }
 
+
+/**
+  * @brief  This function handles EXTI Handler.
+  * @param  None
+  * @retval None
+  */
+void EXTI0_1_IRQHandler(void)
+{
+    //判断中断入口
+    if (EXTI->PR & (0x1<<0))
+    {
+        EXTI->PR |= (0x1<<0);   //清标志位
+        
+        g_IRQInterface.pf_EXTI_IRQHandler[0](); //执行中断回调
+    }
+    
+    if (EXTI->PR & (0x1<<1))
+    {
+        EXTI->PR |= (0x1<<1);   //清标志位
+            
+        g_IRQInterface.pf_EXTI_IRQHandler[1](); //执行中断回调
+    } 
+    
+    
+}
+
+
+/**
+  * @brief  This function handles EXTI Handler.
+  * @param  None
+  * @retval None
+  */
+void EXTI2_3_IRQHandler(void)
+{
+    //判断中断入口
+    if (EXTI->PR & (0x1<<2))
+    {
+        EXTI->PR |= (0x1<<2);   //清标志位
+        
+        g_IRQInterface.pf_EXTI_IRQHandler[2](); //执行中断回调
+    }
+    
+    if (EXTI->PR & (0x1<<3))
+    {
+        EXTI->PR |= (0x1<<3);   //清标志位
+            
+        g_IRQInterface.pf_EXTI_IRQHandler[3](); //执行中断回调
+    } 
+    
+}
+
+
+/**
+  * @brief  This function handles EXTI Handler.
+  * @param  None
+  * @retval None
+  */
+void EXTI4_15_IRQHandler(void)
+{
+    
+    for (int i = 4; i < 16; i++)
+    {
+        if (EXTI->PR & (0x1<<i))
+        {
+            EXTI->PR |= (0x1<<i);   //清标志位
+            
+            g_IRQInterface.pf_EXTI_IRQHandler[i](); //执行中断回调
+        }
+            
+    }
+    
+}
+
+
+
+
 void PVD_IRQHandler                 (void){g_IRQInterface.pf_PVD_IRQHandler                ();}
 void RTC_IRQHandler                 (void){g_IRQInterface.pf_RTC_IRQHandler                ();}
 void FLASH_IRQHandler               (void){g_IRQInterface.pf_FLASH_IRQHandler              ();}
 void RCC_IRQHandler                 (void){g_IRQInterface.pf_RCC_IRQHandler                ();}
-void EXTI0_1_IRQHandler             (void){g_IRQInterface.pf_EXTI0_1_IRQHandler            ();}
-void EXTI2_3_IRQHandler             (void){g_IRQInterface.pf_EXTI2_3_IRQHandler            ();}
-void EXTI4_15_IRQHandler            (void){g_IRQInterface.pf_EXTI4_15_IRQHandler           ();}
+
 void TS_IRQHandler                  (void){g_IRQInterface.pf_TS_IRQHandler                 ();}
 void DMA1_Channel1_IRQHandler       (void){g_IRQInterface.pf_DMA1_Channel1_IRQHandler      ();}
 void DMA1_Channel2_3_IRQHandler     (void){g_IRQInterface.pf_DMA1_Channel2_3_IRQHandler    ();}

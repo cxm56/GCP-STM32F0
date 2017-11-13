@@ -25,9 +25,8 @@
 #include "../SysPeripheral/SysTick/SysTimer.h"
 #include "../SysPeripheral/SysCtrl/SysCtrl.h"
 #include "../SysPeripheral/EXTI/EXTI.h"
+#include "../SysPeripheral/UART/UART.h"
 
-#include "../PeriDrivers/NixieTube/NixieTube.h"
-#include "../PeriDrivers/Eeprom/Eeprom.h"
 
 
 /*****************************************************************************
@@ -73,6 +72,13 @@ void GC_HwInit(void)
     EXTI_Init(GC_INPUT_IO_PWM1, EXTI_TRG_RISING | EXTI_TRG_FALLING);
     EXTI_Init(GC_INPUT_IO_PWM2, EXTI_TRG_RISING | EXTI_TRG_FALLING);
     EXTI_Init(GC_INPUT_IO_PWM3, EXTI_TRG_RISING | EXTI_TRG_FALLING);
+    
+    //使能BLE输出
+    GPIO_MAN_SetOutputPinLogicToggle(GC_OUTPUT_IO_BLE_EN, 1);
+    GPIO_MAN_SetOutputPinState(GC_OUTPUT_IO_BLE_EN, 1);
+    
+    //使能串口0
+    UART_Init(0, 9600);
     
 }
 
