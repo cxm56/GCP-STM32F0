@@ -47,8 +47,8 @@ static void HAL_UART1_DMATC_IRQHandler(void);
 static USART_TypeDef * const USART[HAL_UART_NODE_NUM] = {USART1,USART2};
 static DMA_Channel_TypeDef * const USART_RxDmaChannel[HAL_UART_NODE_NUM] = {DMA1_Channel3, DMA1_Channel5};
 static DMA_Channel_TypeDef * const USART_TxDmaChannel[HAL_UART_NODE_NUM] = {DMA1_Channel2, DMA1_Channel4};
-static const IRQn_Type USARTx_IRQn[HAL_UART_NODE_NUM] = {USART1_IRQn, USART2_IRQn};
-static const IRQn_Type USARTx_DMA_IRQn[HAL_UART_NODE_NUM] = {DMA1_Channel2_3_IRQn, DMA1_Channel4_5_IRQn};
+static const IRQn_Type USART_IRQn[HAL_UART_NODE_NUM] = {USART1_IRQn, USART2_IRQn};
+static const IRQn_Type USART_DMA_IRQn[HAL_UART_NODE_NUM] = {DMA1_Channel2_3_IRQn, DMA1_Channel4_5_IRQn};
 
 
 /* ---定义接收缓冲区--- */
@@ -81,12 +81,12 @@ static void HAL_UART_IOConfig(uint8_t uUartNode)
         HAL_GPIO_ModeConfig(0, 9, GPIO_AF_PP_H);
         GPIOA->AFR[1]  &= ~(0XFU<<((9-8)*4));
         GPIOA->AFR[1]  |=  (0X1U<<((9-8)*4));   //USART_TX
-
+        
         // RX: PA10
         HAL_GPIO_ModeConfig(0, 10, GPIO_AF_PP_H);
         GPIOA->AFR[1]  &= ~(0XFU<<((10-8)*4));
         GPIOA->AFR[1]  |=  (0X1U<<((10-8)*4));  //USART_RX
-
+        
         break;                      
     case HAL_UART_NODE1:
         // TX: PA2
@@ -132,7 +132,7 @@ static void HAL_UART_ConfigItCallBack(uint8_t uUartNode)
             HAL_IRQ_SetTrgCallback(HAL_UART1_DMATC_IRQHandler, IRQ_TRG_DMA1_Channel4_5);
             break;
         }
-    
+        
     default: break; //不应该出现在这里
     }
     
@@ -146,44 +146,44 @@ static void HAL_UART_ConfigItCallBack(uint8_t uUartNode)
   */
 static void HAL_UART_ModeConfig(uint8_t uUartNode, uint32_t ulBaudRate)
 {
-  //开时钟
-  if (uUartNode == HAL_UART_NODE0)
-  {
-    RCC->APB2ENR |=  (0X1<<14);
-  }
-  else 
-  {
-    RCC->APB1ENR |=  (0X1<<(16+uUartNode));
-  }
-  
-  //配置工作模式
-  USART[uUartNode]->CR1 &= ~(0X1<<12);  //8位字长
-  USART[uUartNode]->CR1 &= ~(0X1<<10);  //不使用校验位
-  USART[uUartNode]->CR1 |=  (0X1<<3);   //使能发送
-  USART[uUartNode]->CR1 |=  (0X1<<2);   //使用接收
-  USART[uUartNode]->CR2 &= ~(0X3<<12);  //1位停止位
-  USART[uUartNode]->CR3 |=  (0X1<<7);   //DMA发送使能
-  USART[uUartNode]->CR3 |=  (0X1<<6);   //DMA接收使能
-  
-  //配置中断
-  USART[uUartNode]->CR1 &= ~(0X1<<6);   //关发送完成中断
-  USART[uUartNode]->CR1 &= ~(0X1<<5);   //关接收中断
-  USART[uUartNode]->CR1 |=  (0X1<<4);   //开空闲中断
-  
-  //清标志位
-  USART[uUartNode]->ICR |=  (0X1<<6);
-  USART[uUartNode]->ICR |=  (0X1<<5);
-  USART[uUartNode]->ICR |=  (0X1<<4);
-  
-  NVIC_SetPriority(USARTx_IRQn[uUartNode], 2);
-  NVIC_EnableIRQ(USARTx_IRQn[uUartNode]); //开内核中断
-  
-  //配置波特率
-  USART[uUartNode]->BRR = USARTx_GET_BRR(APB2_FCLK, ulBaudRate);
-  
-  //开串口
-  USART[uUartNode]->CR1 |=  (0x1<<0);
-  
+    //开时钟
+    if (uUartNode == HAL_UART_NODE0)
+    {
+        RCC->APB2ENR |=  (0X1<<14);
+    }
+    else 
+    {
+        RCC->APB1ENR |=  (0X1<<(16+uUartNode));
+    }
+    
+    //配置工作模式
+    USART[uUartNode]->CR1 &= ~(0X1<<12);  //8位字长
+    USART[uUartNode]->CR1 &= ~(0X1<<10);  //不使用校验位
+    USART[uUartNode]->CR1 |=  (0X1<<3);   //使能发送
+    USART[uUartNode]->CR1 |=  (0X1<<2);   //使用接收
+    USART[uUartNode]->CR2 &= ~(0X3<<12);  //1位停止位
+    USART[uUartNode]->CR3 |=  (0X1<<7);   //DMA发送使能
+    USART[uUartNode]->CR3 |=  (0X1<<6);   //DMA接收使能
+    
+    //配置中断
+    USART[uUartNode]->CR1 &= ~(0X1<<6);   //关发送完成中断
+    USART[uUartNode]->CR1 &= ~(0X1<<5);   //关接收中断
+    USART[uUartNode]->CR1 |=  (0X1<<4);   //开空闲中断
+    
+    //清标志位
+    USART[uUartNode]->ICR |=  (0X1<<6);
+    USART[uUartNode]->ICR |=  (0X1<<5);
+    USART[uUartNode]->ICR |=  (0X1<<4);
+    
+    NVIC_SetPriority(USART_IRQn[uUartNode], 2);
+    NVIC_EnableIRQ(USART_IRQn[uUartNode]); //开内核中断
+    
+    //配置波特率
+    USART[uUartNode]->BRR = USARTx_GET_BRR(APB2_FCLK, ulBaudRate);
+    
+    //开串口
+    USART[uUartNode]->CR1 |=  (0x1<<0);
+    
 }
 
 
@@ -263,8 +263,8 @@ static void HAL_UART_DmaTxInit(uint8_t uUartNode)
     USART_TxDmaChannel[uUartNode]->CCR &= ~(0X1<<2);   //关闭半传输中断
     USART_TxDmaChannel[uUartNode]->CCR |=  (0X1<<1);   //开传输完成中断
     
-    NVIC_SetPriority(USARTx_DMA_IRQn[uUartNode], 2);
-    NVIC_EnableIRQ(USARTx_DMA_IRQn[uUartNode]); //开内核中断
+    NVIC_SetPriority(USART_DMA_IRQn[uUartNode], 2);
+    NVIC_EnableIRQ(USART_DMA_IRQn[uUartNode]); //开内核中断
     
     //配置外设地址
     USART_TxDmaChannel[uUartNode]->CPAR = (uint32_t)&(USART[uUartNode]->TDR);
@@ -338,13 +338,25 @@ void HAL_UART_Enable(uint8_t uUartNode, bool bIsEnable)
 {
     if (bIsEnable)
     {
-
+        USART[uUartNode]->CR1 |=   (0x1<<0);
     }
     else 
     {
-
+        USART[uUartNode]->CR1 &=  ~(0x1<<0);
     }
    
+}
+
+
+/**
+  * @brief  串口发送状态获取
+  * @param  uUartNode 串口节点号
+  * @retval 0-发送中 非0-发送完成
+  */
+uint32_t HAL_UART_GetTransStatus(uint8_t uUartNode)
+{
+    
+    return (USART[uUartNode]->ISR & (0x1<<6)) != 0;
 }
 
 
@@ -413,6 +425,25 @@ uint32_t HAL_UART_RecvBuff(uint8_t uUartNode, void *pRBuff, uint32_t ulSize)
 {
     
     return RingBuffer_PopMult(&m_RxRing[uUartNode], pRBuff, ulSize);
+}
+
+
+/**
+  * @brief  数据接收处理(非阻塞接收线程)
+  * @param  uUartNode 串口节点号
+  * @retval None
+  * @retval 本函数是应用于非中断接收的情况,单独一个线程做数据接收
+  */
+void HAL_UART_RecvHandler(uint8_t uUartNode)
+{
+    
+    //假如接收到数据,则将其存储入环形缓冲区之中
+    if (USART[uUartNode]->ISR & (0x1<<5))
+    {
+        uint8_t uData = USART[uUartNode]->RDR;
+        RingBuffer_Insert(&m_RxRing[uUartNode], &uData);
+    }
+    
 }
 
 
