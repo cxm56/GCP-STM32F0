@@ -30,7 +30,7 @@
  * 私有成员定义及实现
  ****************************************************************************/
 
-#define GC_CMD_GET_PUSH    "x:GET_PULSE."
+#define GC_CMD_GET_PUSH    "GET."
 
 static uBit8 uCmdBuff[GC_CMD_BUFF_LEN] = {0};   //定义指令缓冲区
      
@@ -79,16 +79,16 @@ void GC_ComHandler(void)
                     
                     if (lPwmCount > 0)
                     {
-                        sprintf(uTempBuff, "x:+%ld.", lPwmCount);
+                        sprintf(uTempBuff, "+%ld", lPwmCount);
                     }
                     else 
                     {
-                        sprintf(uTempBuff, "x:%ld.", lPwmCount);
+                        sprintf(uTempBuff, "%ld", lPwmCount);
                     }
                 }
                 else 
                 {
-                    sprintf(uTempBuff, "x:NULL.");
+                    sprintf(uTempBuff, "ERR");
                 }
                 
                 UART_SendBuff(0, (uBit8 *)uTempBuff, ulRxIndex+1);
